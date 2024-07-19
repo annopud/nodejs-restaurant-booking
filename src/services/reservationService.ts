@@ -1,6 +1,10 @@
-import { Reservation } from "../models/reservation";
+import {
+  CancellationResult,
+  Reservation,
+  ReservationResult,
+} from "../models/reservation";
 
-class ReservationService {
+export class ReservationService {
   private totalTableCount: number = 0;
   private remainingTable: number = 0;
   private isInitialized: boolean = false;
@@ -16,7 +20,7 @@ class ReservationService {
     return "Tables initialized successfully.";
   }
 
-  reserveTable(customers: number | null) {
+  reserveTable(customers?: number): Error | ReservationResult {
     if (!this.isInitialized) {
       throw new Error("Tables have not been initialized.");
     }
@@ -38,6 +42,29 @@ class ReservationService {
     return {
       bookingId,
       bookedTableCount: requiredTables,
+      remainingTable: this.remainingTable,
+    };
+  }
+
+  cancelReservation(bookingId?: string): Error | CancellationResult {
+    if (!this.isInitialized) {
+      throw new Error("Tables have not been initialized.");
+    }
+
+    if (!bookingId) {
+      throw new Error("Invalid bookingId.");
+    }
+
+    const reservation = this.reservationData[bookingId];
+    if (!reservation) {
+      throw new Error("Booking ID not found.");
+    }
+
+    this.remainingTable += reservation.tableCount;
+    delete this.reservationData[bookingId];
+
+    return {
+      freedTableCount: reservation.tableCount,
       remainingTable: this.remainingTable,
     };
   }

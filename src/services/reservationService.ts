@@ -20,7 +20,7 @@ export class ReservationService {
     return "Tables initialized successfully.";
   }
 
-  reserveTable(customers?: number): Error | ReservationResult {
+  reserveTable(customers: number | null): Error | ReservationResult {
     if (!this.isInitialized) {
       throw new Error("Tables have not been initialized.");
     }
@@ -46,7 +46,7 @@ export class ReservationService {
     };
   }
 
-  cancelReservation(bookingId?: string): Error | CancellationResult {
+  cancelReservation(bookingId: string | null): Error | CancellationResult {
     if (!this.isInitialized) {
       throw new Error("Tables have not been initialized.");
     }

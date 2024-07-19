@@ -30,7 +30,7 @@ describe("ReservationService", () => {
 
   test("reserveTable should get an error 'Tables have not been initialized.'", () => {
     expect(() => {
-      reservationService.reserveTable();
+      reservationService.reserveTable(null);
     }).toThrow("Tables have not been initialized.");
   });
 
@@ -38,7 +38,7 @@ describe("ReservationService", () => {
     reservationService.initializeTable(10);
 
     expect(() => {
-      reservationService.reserveTable();
+      reservationService.reserveTable(null);
     }).toThrow("Invalid number of customers.");
   });
 
@@ -62,7 +62,7 @@ describe("ReservationService", () => {
 
   test("cancelReservation should get an error 'Tables have not been initialized.'", () => {
     expect(() => {
-      reservationService.cancelReservation();
+      reservationService.cancelReservation(null);
     }).toThrow("Tables have not been initialized.");
   });
 
@@ -70,7 +70,7 @@ describe("ReservationService", () => {
     reservationService.initializeTable(10);
 
     expect(() => {
-      reservationService.cancelReservation();
+      reservationService.cancelReservation(null);
     }).toThrow("Invalid bookingId.");
   });
 
